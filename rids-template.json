@@ -1,0 +1,18 @@
+{
+    "template": "rids",
+    "settings" : {
+        "index.number_of_shards" : 10,
+        "index.number_of_replicas" : 1
+    },
+    "mappings": {
+        "_default_": {
+            "_all": { "enabled": false },
+            "_source": { "compress": false },
+            "properties" : {
+                "@timestamp" : { "type" : "date", "index" : "not_analyzed" }, 
+                "ridscounters" : { "type" : "string"}, 
+                "lastupdate_master" : { "type" : "string"}
+             }
+        }
+    }
+}
