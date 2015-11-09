@@ -33,8 +33,8 @@ def read_data(data):
         return(json.load(f))
 
 def update_rids(data):
-   print "updating rids"
-   write_rids(data)
+    print "updating rids"
+    write_rids(data)
 
 es = Elasticsearch()
 # create an index in elasticsearch, ignore status code 400 (index already exists)
@@ -52,17 +52,18 @@ for id in clients:
     print data
     #check only if last update master is not this host
     if data['_source']['lastupdate_master'] != hostname :
-        #check save version , if not there save it first
-        #write if rids has been updated
+    #check save version , if not there save it first
+    #write if rids has been updated
         try:
             sdata = read_data(data)
             print "read sucess " 
             #print sdata
             if data['_version'] >  sdata ['_version']:
+                write_data(data)
                 update_rids(data)
             elif (data['_version'] == sdata ['_version'] and
-            data['_source']['ridscounters'] != sdata['_source']
-            ['ridscounters']):
+                data['_source']['ridscounters'] != sdata['_source']
+                ['ridscounters']):
                 print "same version different values"
                 update_rids(data)
             else:
